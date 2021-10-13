@@ -11,6 +11,7 @@ class WriteDockerfile():
 
     def __build_content(self):
         self.output_content = self.output_content.replace("\n\n", ",")
+        self.output_content = self.output_content.replace("\n", ",")
         self.output_content = self.output_content.split(",")
         self.docker_content = "FROM ubuntu\n\n"
         self.docker_content += "RUN apt-get update\n\n"

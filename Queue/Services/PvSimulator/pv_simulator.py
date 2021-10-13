@@ -11,7 +11,10 @@ from create_output_text import CreateOutputText
 
 class PvSimulator():
     def __init__(self, input):
-        self.config = input.config
+        self.sunrize = input.sunrize
+        self.sunset = input.sunset
+        self.dawn = input.dawn
+        self.max_pv_power = input.max_pv_power
         self.output_file = input.output_file
         self.time_points = input.time_points
         self.queue_name = input.queue_name

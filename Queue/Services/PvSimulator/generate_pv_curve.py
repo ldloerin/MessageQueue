@@ -4,10 +4,10 @@ import numpy as np
 class GeneratePvCurve():
     def __init__(self, input):
         self.day_length = len(input.meter_curve)  # 1 measure point / 10 minutes during 24 hours
-        self.sunrize = input.config['sunrize']
-        self.sunset = input.config['sunset']
-        self.ramp_steps = int(input.config['dawn'] * 6)
-        self.max_pv_power = input.config['max_pv_power']
+        self.sunrize = input.sunrize
+        self.sunset = input.sunset
+        self.ramp_steps = int(input.dawn * 6)
+        self.max_pv_power = input.max_pv_power
         self.__calculate_daylight()
         self.__create_solar_radiation_distribution()
         self.__initialize_pv_curve()

@@ -12,5 +12,5 @@ class Publish():
         channel = connection.channel()
         channel.queue_declare(queue=self.queue_name)
         channel.basic_publish(exchange="", routing_key=self.queue_name, body=self.my_data)
-        print('Transferred: ' + self.my_data)
+        # print('Transferred: ' + self.my_data)
         connection.close()

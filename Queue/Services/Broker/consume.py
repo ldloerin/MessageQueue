@@ -16,7 +16,7 @@ class Consume():
         self.channel.start_consuming()
 
     def __callback(self, ch, method, properties, body):
-        print("Received %r" % body)
+        # print("Received %r" % body)
         self.__store_message(body)
 
     def __store_message(self, body):
