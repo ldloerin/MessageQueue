@@ -36,7 +36,7 @@ class ControlQueue(GetInput):
         self.__create_dockerfile()
 
 
-my_rand = random.randrange(0, 1e9)       
+my_rand = random.randrange(0, 1e9)
 my_queue = ControlQueue(__file__)
 my_queue.execute_workflow(my_rand)
 p1 = multiprocessing.Process(target=my_queue.run_meter_process)
