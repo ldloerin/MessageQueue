@@ -1,16 +1,30 @@
-# CI / CD test workflow
+# Message Queue
 
-This repository includes a simple code routine including pytest. It's used to build a CI / CD pipeline. The code itself uses the configuration input from /Main/Input/config.json to build an email address. This repository contains a test routine to asser the created mail address with an expected value.
+PvSimulator Message Queue
+Python Interpreter 3.8.3
+David Loerinci
 
-- use Main/Input/config.json to define first name, last name, name seperator and the domain
-- run the code by launching python ./Main/main.py
-- the resulst is a print return value of the created mail address
-- the code also writes the mail address into a Docker file to echo the result
+Required installations:
 
-Use the test routine
+1. Install pika module:
+   Windows: python -m pip install pika
+   Debian / Ubuntu: sudo apt-get install -y python3-pika
 
-- define name and folder of the main test code (which is topic of the unit test here) as an input in Test001/Input/config.json
-- define the expected mail address in Test001/Input/config.json
-- run Test001/test_001_build_mail_address.py by using pytest as test environment
+2. Install Erlang:
+   Windows: https://www.erlang.org/downloads
 
-The CI/CD pipeline will run a lint process with flake8 and execute the pytest routine, on every push of committed code onto GitHub. After merging a pull request into the main branch, the CI/CD process will create a Docker image and list all the Docker images. The process will log onto DockerHub and push the just created image.
+3. Install RabbitMQ Server:
+   Windows: https://www.rabbitmq.com/install-windows.html
+   Debian / Ubuntu: sudo apt-get install rabbitmq-server
+
+Run the workflow:
+
+- Do not change the folder structure
+- Execute the file PV_QUEUE/Queue/control_queue.py
+- The RabbitMQ Queue name can be defined in the file PV_QUEUE/Queue/Input/config.json and is currently set to "pv_challenge_workflow". The queue name will be completed by a random number, so the code will create a fresh queue with every launch.
+- Within the config.json file the sunset is set to 8 a.m. and the sunset is set to 8 p.m. (20). The twilight time period is set to 1.5 hours and the maximum PV power is currently set to 3.3 kW. These values can be adjusted to modify the PV power curve.
+- This workflow covers the time period of 24 hours, starting at midnight. The power values of the meter and the PV simulator are defined in 10 minute steps, starting at 00:00, 00:10 and so on. The last time point is 23:50.
+- The meter sequence reads the PV_QUEUE/Queue/Input/measure_time_points.csv file and defines 144 random power values within the range of 0 - 9 kW for every time step. Each time - power pair of values is sent to the broker queue one by one, using RabbitMQ. The used host is set to "localhost"
+- Simultaneously the PvSimulator code is executed. This launches the RabbitMQ consumer. This receives all pairs of values and stops consuming, once it received 144 messages.
+- The PV Simulator creates a power curve from 0 kW during the night, up to the predefined PV maximum power. Between sunrise and sunset, the code uses a Gaussian distribution to simulate the PV power curve. Before sunrise and after sunset it ramps the curve during the twilight time period from 0 W to the start / end point of the Gaussian power curve.
+- The PV Simulator adds the PV power curve to the received meter curve and writes the time points, the meter curve, the PV curve and the total sum curve to the file PV_QUEUE/Queue/Output/results.csv, using 4 columns.
