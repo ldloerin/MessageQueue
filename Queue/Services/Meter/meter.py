@@ -18,4 +18,4 @@ class Meter:
         self.current_time_point = str([self.time, random_power])
 
     def __send_data(self, queue_name):
-        my_publish = Publish.send_message(self.current_time_point, queue_name)
+        Publish.send_message(self.current_time_point, queue_name)

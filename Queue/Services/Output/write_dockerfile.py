@@ -1,9 +1,8 @@
 import codecs
-import os
 
 
 class WriteDockerfile:
-    def execute_workflow(self,dockerfile, output_content):
+    def execute_workflow(self, dockerfile, output_content):
         self.__build_content(output_content)
         self.__write_file(dockerfile)
 
