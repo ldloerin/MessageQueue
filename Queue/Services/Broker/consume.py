@@ -2,13 +2,12 @@ import pika
 
 
 class Consume():
-    def __init__(self, input):
-        self.time_points = input.time_points
-        self.queue_name = input.queue_name
+    def __init__(self, time_points, queue_name):
+        self.time_points = time_points
+        self.queue_name = queue_name
         self.received_data = []
-        self.__receive_message()
 
-    def __receive_message(self):
+    def receive_message(self):
         connection = pika.BlockingConnection(pika.ConnectionParameters(host="localhost"))
         self.channel = connection.channel()
         self.channel.queue_declare(queue=self.queue_name)
