@@ -1,12 +1,13 @@
 import pika
 
+
 class Consume():
     def __init__(self, input):
         self.time_points = input.time_points
         self.queue_name = input.queue_name
         self.received_data = []
         self.__receive_message()
-    
+
     def __receive_message(self):
         connection = pika.BlockingConnection(pika.ConnectionParameters(host="localhost"))
         self.channel = connection.channel()
@@ -16,8 +17,8 @@ class Consume():
 
     def __callback(self, ch, method, properties, body):
         print("Received %r" % body)
-        self.__store_message(body)        
-    
+        self.__store_message(body)     
+
     def __store_message(self, body):
         current_data = body.decode("utf-8")
         current_data = current_data.replace('[', '')

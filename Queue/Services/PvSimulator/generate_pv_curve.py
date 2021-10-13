@@ -3,7 +3,7 @@ import numpy as np
 
 class GeneratePvCurve():
     def __init__(self, input):
-        self.day_length = len(input.meter_curve) # 1 measure point / 10 minutes during 24 hours
+        self.day_length = len(input.meter_curve)  # 1 measure point / 10 minutes during 24 hours
         self.sunrize = input.config['sunrize']
         self.sunset = input.config['sunset']
         self.ramp_steps = int(input.config['dawn'] * 6)
