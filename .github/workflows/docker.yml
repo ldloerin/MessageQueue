@@ -1,0 +1,28 @@
+name: Docker Workflow
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker build
+        run: |
+          docker build -t dloerin/mail_address_demo:1.0 ./Docker 
+
+      - name: List docker images
+        run: |
+          docker images
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push
+        run: |
+          docker push dloerin/mail_address_demo:1.0
