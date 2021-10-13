@@ -11,7 +11,7 @@ jobs:
 
       - name: Docker build
         run: |
-          docker build -t dloerin/mail_address_demo:1.0 ./Docker 
+          docker build -t dloerin/message_queue_demo:1.0 ./Queue/Docker 
 
       - name: List docker images
         run: |
@@ -25,4 +25,4 @@ jobs:
 
       - name: Push
         run: |
-          docker push dloerin/mail_address_demo:1.0
+          docker push dloerin/message_queue_demo:1.0
