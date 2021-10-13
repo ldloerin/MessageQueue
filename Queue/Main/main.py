@@ -1,4 +1,3 @@
-import multiprocessing
 import os
 import sys
 sys.path.append(os.path.split(os.path.dirname(__file__))[0])
@@ -8,6 +7,7 @@ from Services.Output.write_dockerfile import WriteDockerfile
 # from Services.PvSimulator.pv_simulator import PvSimulator
 # import random
 # import time
+# import multiprocessing
 
 
 class ControlQueue(GetInput):
