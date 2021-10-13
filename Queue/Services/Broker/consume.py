@@ -17,7 +17,7 @@ class Consume():
 
     def __callback(self, ch, method, properties, body):
         print("Received %r" % body)
-        self.__store_message(body)  
+        self.__store_message(body)
 
     def __store_message(self, body):
         current_data = body.decode("utf-8")
