@@ -4,6 +4,7 @@ from Services.Config.read_json_file import ReadJsonFile
 
 class GetInput:
     def __init__(self, main_code_file):
+        super().__init__()
         self.code_path = os.path.dirname(main_code_file)
         self.__get_input_parameters()
 

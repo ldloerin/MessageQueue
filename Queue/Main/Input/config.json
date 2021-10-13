@@ -1,0 +1,7 @@
+{
+    "queue_name": "pv_challenge_workflow",
+    "sunrize": 8,
+    "sunset": 20,
+    "dawn": 1.5,
+    "max_pv_power": 3.3
+}
