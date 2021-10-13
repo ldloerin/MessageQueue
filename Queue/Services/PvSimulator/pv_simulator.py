@@ -18,6 +18,8 @@ class PvSimulator():
         self.output_file = input.output_file
         self.time_points = input.time_points
         self.queue_name = input.queue_name
+
+    def execute_workflow(self):
         self.__receive_data()
         self.__run_generate_pv_curve()
         self.__calculate_total_power_curve()
@@ -25,16 +27,22 @@ class PvSimulator():
         self.__write_output()
 
     def __receive_data(self):
-        self.meter_curve = Consume(self).received_data
+        my_consume = Consume(self.time_points, self.queue_name)
+        my_consume.receive_message()
+        self.meter_curve = my_consume.received_data
 
     def __run_generate_pv_curve(self):
-        self.pv_curve = GeneratePvCurve(self).pv_curve
+        my_pv_curve = GeneratePvCurve(self)
+        my_pv_curve.execute_workflow()
+        self.pv_curve = my_pv_curve.pv_curve
 
     def __calculate_total_power_curve(self):
-        self.total_power_curve = CalculateTotalPowerCurve(self).total_power_curve
+        my_total_curve = CalculateTotalPowerCurve()
+        my_total_curve.execute_workflow(self.meter_curve, self.pv_curve)
+        self.total_power_curve = my_total_curve.total_power_curve
 
     def __create_output_text(self):
-        self.output_text = CreateOutputText(self).output_text
+        self.output_text = CreateOutputText.create_text(self.total_power_curve)
 
     def __write_output(self):
         f = open(self.output_file, "w+")

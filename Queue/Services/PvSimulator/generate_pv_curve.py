@@ -8,6 +8,8 @@ class GeneratePvCurve():
         self.sunset = input.sunset
         self.ramp_steps = int(input.dawn * 6)
         self.max_pv_power = input.max_pv_power
+
+    def execute_workflow(self):
         self.__calculate_daylight()
         self.__create_solar_radiation_distribution()
         self.__initialize_pv_curve()

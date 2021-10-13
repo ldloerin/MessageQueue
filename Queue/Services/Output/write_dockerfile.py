@@ -2,23 +2,21 @@ import codecs
 import os
 
 
-class WriteDockerfile():
-    def __init__(self, root_path, output_content):
-        self.dockerfile = os.path.join(root_path, 'Docker', 'dockerfile')
-        self.output_content = output_content
-        self.__build_content()
-        self.__write_file()
+class WriteDockerfile:
+    def execute_workflow(self,dockerfile, output_content):
+        self.__build_content(output_content)
+        self.__write_file(dockerfile)
 
-    def __build_content(self):
-        self.output_content = self.output_content.replace("\n\n", ",")
-        self.output_content = self.output_content.replace("\n", ",")
-        self.output_content = self.output_content.split(",")
+    def __build_content(self, output_content):
+        output_content = output_content.replace("\n\n", ",")
+        output_content = output_content.replace("\n", ",")
+        output_content = output_content.split(",")
         self.docker_content = "FROM ubuntu\n\n"
         self.docker_content += "RUN apt-get update\n\n"
-        for line in self.output_content:
+        for line in output_content:
             self.docker_content += 'CMD ["echo", "' + line + '"]\n\n'
 
-    def __write_file(self):
-        f = codecs.open(self.dockerfile, "w", "utf-8")
+    def __write_file(self, dockerfile):
+        f = codecs.open(dockerfile, "w", "utf-8")
         f.write(self.docker_content)
         f.close()
