@@ -21,8 +21,8 @@ class GeneratePvCurve():
 
     def __create_solar_radiation_distribution(self):
         self.x_values = np.linspace(1, self.daylight_length, self.daylight_length)
-        self.mu = int(self.daylight_length / 2)
-        self.sigma = 15
+        self.mu = int(self.daylight_length / 2)  # median
+        self.sigma = 15  # varianz
         self.__gaussian()
 
     def __gaussian(self):
