@@ -1,5 +1,5 @@
 import os
-from Services.Config.read_json_file import ReadJsonFile
+from Services.Config.read_json import ReadJson
 
 
 class GetInput:
@@ -9,8 +9,8 @@ class GetInput:
         self.__get_input_parameters()
 
     def __get_input_parameters(self):
-        parameter_file = os.path.join(self.code_path, "Input", "config.json")
-        parameter_file = parameter_file.replace("\\", "/")
-        inputs = ReadJsonFile.load(parameter_file)
+        json_file = os.path.join(self.code_path, "Input", "config.json")
+        json_file = json_file.replace("\\", "/")
+        inputs = ReadJson.read_json_file(json_file)
         for key, value in inputs.items():
             setattr(self, key, value)
